@@ -21,7 +21,7 @@
     "pug": "^2.0.4"
   },
   "devDependencies": {
-    "jshint": "2.10.3",
+    "eslint": "^6.6.0",
     "nodemon": "^1.19.4"
   }
 }
