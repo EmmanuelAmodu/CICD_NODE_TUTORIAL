@@ -1,56 +1,41 @@
 const validate = require('../schema')
-
-const courses = [
-    { id: 1, name: 'course1' },
-    { id: 2, name: 'course2' },
-    { id: 3, name: 'course3' },
-]
+const CourseModel = require('../models/course.model')
 
 module.exports = {
-    getAllCourses(req, res) {
+    async getAllCourses(req, res) {
+        const courses = await CourseModel.find({});
         res.send(courses)
     },
 
-    getCourse(req, res) {
-        const course = courses.find(c => c.id === parseInt(req.params.id))
+    async getCourse(req, res) {
+        const course = await CourseModel.find({ _id: req.params.id })
         if (!course) res.status(404).send('The course with the given id does not exist');
         else res.send(course);
     },
 
-    createCourse(req, res) {
+    async createCourse(req, res) {
         const { error }  = validate.course(req.body)
         if (error) return res.status(400).send(error.details[0].message);
-        const course = {
-            id: courses.length + 1,
-            name: req.body.name
-        }
-        courses.push(course)
+
+        const course = await new CourseModel({
+            name: req.body.name,
+            author: req.body.author,
+            tags: req.body.tags
+        }).save();
+
         res.send(course)
     },
 
-    updateCourses(req, res) {
-        const course = courses.find(c => c.id === parseInt(req.params.id))
-    
-        if (course) {
-            const { error } = validate.course(req.body)
-            if (error) return res.status(400).send(error.details[0].message);
-    
-            course.name = req.body.name
-            res.send(course)
-        } else {
-            res.status(404).send('The course with the given id does not exist');
-        }
+    async updateCourses(req, res) {
+        const { error } = validate.course(req.body)
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const course = await CourseModel.findByIdAndUpdate({ _id: req.params.id }, req.body)
+        res.send(course)
     },
 
-    deleteCourse(req, res) {
-        const course = courses.find(c => c.id === parseInt(req.params.id))
-    
-        if (course) {
-            const index = courses.indexOf(course)
-            courses.splice(index, 1);
-            res.send(course)
-        } else {
-            res.status(404).send('The course with the given id does not exist');
-        }
+    async deleteCourse(req, res) {
+        const course = await CourseModel.findByIdAndRemove({ _id: req.params.id })
+        res.send(course)
     }
 }
