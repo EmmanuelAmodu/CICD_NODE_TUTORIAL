@@ -13,10 +13,12 @@ const courseSchema = new Schema({
         lowercase: true,
         trim: true
     },
-    author: {
-        type: String,
-        required: true
-    },
+    author: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Users'
+        }
+    ],
     tags: {
         type: Array,
         validate: {
