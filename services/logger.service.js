@@ -24,7 +24,7 @@ class Logger extends EventEmitter {
         }
     }
 
-    _log(message) {
+    _log(/*message*/) {
         return new Promise((resolve, reject) => {
             // perform log operations here
             const status = Math.floor(Math.random() * 10)

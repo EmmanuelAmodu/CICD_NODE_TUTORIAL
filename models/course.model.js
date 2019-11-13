@@ -9,7 +9,9 @@ const courseSchema = new Schema({
     category: {
         type: String,
         required: true,
-        enum: ['web', 'mobile', 'network']
+        enum: ['web', 'mobile', 'network'],
+        lowercase: true,
+        trim: true
     },
     author: {
         type: String,
@@ -36,7 +38,9 @@ const courseSchema = new Schema({
         type: Number,
         required: function () {
             return this.isPublished
-        }
+        },
+        get: v => Math.round(v),
+        set: v => Math.round(v)
     }
 });
 

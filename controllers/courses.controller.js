@@ -3,8 +3,8 @@ const CourseModel = require('../models/course.model')
 
 module.exports = {
     async getAllCourses(req, res) {
-        const pageNumber = parseInt(req.params.pageNumber);
-        const pageSize = parseInt(req.params.pageSize);
+        const pageNumber = parseInt(req.params.pageNumber || 1);
+        const pageSize = parseInt(req.params.pageSize || 50);
 
         try {
             const courses = await CourseModel.find({}).skip((pageNumber - 1) * pageSize).limit(pageSize);
