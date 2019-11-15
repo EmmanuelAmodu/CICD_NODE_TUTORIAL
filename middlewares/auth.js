@@ -9,7 +9,7 @@ module.exports = (roles = UserModel.getRoles()) =>  (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, config.appKey)
-        if (roles.include(decoded.role)) {
+        if (roles.includes(decoded.role)) {
             req.user = decoded
             next()
         } else return res.status(403).send('Insufficient priviledge');

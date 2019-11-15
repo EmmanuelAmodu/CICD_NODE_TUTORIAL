@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "nodemon app.js --env prod",
+    "dev": "nodemon app.js --env dev",
+    "test": "jest --watchAll --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -27,7 +28,9 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.23",
     "eslint": "^6.6.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4"
   }
 }

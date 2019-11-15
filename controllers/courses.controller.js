@@ -20,7 +20,7 @@ module.exports = {
     },
 
     async createCourse(req, res) {
-        const { error }  = validate.course(req.body)
+        const { error } = validate.course(req.body)
         if (error) return res.status(400).send(error.details[0].message);
 
         const course = await new CourseModel(req.body).save();

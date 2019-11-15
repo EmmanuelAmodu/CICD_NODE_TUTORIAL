@@ -38,11 +38,6 @@ const userSchema = new Schema({
     }
 });
 
-userSchema.pre('save', async function() {
-    const salt = await bcrypt.genSalt(10)
-    this.password = await bcrypt.hash(this.password, salt) 
-})
-
 userSchema.methods = {
     generateAuthToken() {
         const user = _.pick(this, ['_id', 'name', 'email', 'isVerified', 'role'])
@@ -53,7 +48,15 @@ userSchema.methods = {
 userSchema.statics = {
     getRoles() {
         return roles
+    },
+
+    async _generateHash(next) {
+        const salt = await bcrypt.genSalt(10)
+        this.password = await bcrypt.hash(this.password, salt)
+        next();
     }
 }
+
+userSchema.pre('save', userSchema.statics._generateHash.bind(this))
 
 module.exports = mongoose.model('Users', userSchema)
