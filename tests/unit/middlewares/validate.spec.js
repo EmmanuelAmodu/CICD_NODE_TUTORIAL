@@ -13,7 +13,13 @@ describe('validate.course', () => {
     })
 
     it('should return validate correct input', () => {
-        const { error } = validate.course({ name: 'wefvrtf' })
+        const { error } = validate.course({
+            tags: ["express", "backend"],
+            name: "Express.js Course",
+            category: 'web',
+            isPublished: true,
+            price: 10,
+        })
         expect(error).toBeNull()
     })
 })

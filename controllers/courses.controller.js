@@ -13,10 +13,9 @@ module.exports = {
     },
 
     async getCourse(req, res) {
-        const course = await CourseModel.find({ _id: req.params.id })
-        if (course) res.status(404).send('The course with the given id does not exist');
+        const course = await CourseModel.findOne({ _id: req.params.id })
+        if (!course) res.status(404).send('The course with the given id does not exist');
         else res.send(course);
-
     },
 
     async createCourse(req, res) {

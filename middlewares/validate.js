@@ -4,7 +4,14 @@ Joi.objectId = require('joi-objectid')(Joi)
 // TODO improve implementations 
 module.exports = {
     course(obj){
-        return Joi.validate(obj, { name: Joi.string().min(3).required() })
+        return Joi.validate(obj, { 
+            name: Joi.string().min(3).required(),
+            isPublished: Joi.boolean().optional(),
+            tags: Joi.array().required(),
+            category: Joi.string().min(3).max(255).required(),
+            _id: Joi.string().optional(),
+            price: Joi.number().optional()
+        })
     },
 
     user(obj){
