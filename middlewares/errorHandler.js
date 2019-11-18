@@ -9,7 +9,6 @@ module.exports =  function(error, req, res){
         res.status(400).send({ message })
         console.log(error)
     } else {
-        console.log('error me ===> ', error)
         res.status(500).send('Internal server error');
     }
 }

@@ -9,15 +9,16 @@ module.exports = {
         const { error }  = validate.user(req.body)
         if (error) return res.status(400).send(error);
 
-        let user = await UserModel.findOne({ email: req.body.email})
+        let user = await UserModel.findOne({ email: req.body.email })
         if (user) return res.status(400).send('User already Exist');
 
         user = new UserModel(_.pick(req.body, ['name', 'email', 'password']))
-        user = await user.save();
+        await user.save()
 
-        user = _.pick(user, ['_id', 'name', 'email', 'isVerified'])
-        user.token = UserModel.generateAuthToken()
-        res.header('x-auth-token', user.token).send(user)
+        const token = user.generateAuthToken()
+        const result = _.pick(user, ['_id', 'name', 'email', 'isVerified'])
+        result.token = token
+        res.header('x-auth-token', result.token).send(result)
     },
 
     async me(req, res) {
@@ -31,12 +32,12 @@ module.exports = {
 
         let user = await UserModel.findOne({ email: req.body.email})
         if (!user) return res.status(400).send('Invalid username or password');
+        user.token = user.generateAuthToken()
 
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) return res.status(400).send('Invalid username or password');
 
         user = _.pick(user, ['_id', 'name', 'email', 'isVerified'])
-        user.token = UserModel.generateAuthToken()
         res.send(user)
     }
 }

@@ -32,8 +32,6 @@ module.exports = {
     },
 
     async updateCourses(req, res) {
-        const { error } = validate.course(req.body)
-        if (error) return res.status(400).send(error.details[0].message);
         const course = await CourseModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
         res.send(course)
     },

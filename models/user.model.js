@@ -57,6 +57,6 @@ userSchema.statics = {
     }
 }
 
-userSchema.pre('save', userSchema.statics._generateHash.bind(this))
+userSchema.pre('save', userSchema.statics._generateHash)
 
 module.exports = mongoose.model('Users', userSchema)
