@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prod": "node app.js --env prod",
+    "start": "node app.js --env prod",
     "dev": "nodemon app.js --env dev",
     "test": "jest --watchAll --coverage"
   },
