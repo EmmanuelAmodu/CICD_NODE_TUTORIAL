@@ -41,7 +41,9 @@ const userSchema = new Schema({
 userSchema.methods = {
     generateAuthToken() {
         const user = _.pick(this, ['_id', 'name', 'email', 'isVerified', 'role'])
-        return jwt.sign(user, config.appKey)
+        return jwt.sign(user, config.appKey, {
+            expiresIn: '14d'
+        })
     }
 }
 

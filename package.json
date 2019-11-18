@@ -4,14 +4,18 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "prod": "nodemon app.js --env prod",
+    "prod": "node app.js --env prod",
     "dev": "nodemon app.js --env dev",
     "test": "jest --watchAll --coverage"
+  },
+  "engines": {
+    "node": "13.0.1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
+    "compression": "^1.7.4",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
