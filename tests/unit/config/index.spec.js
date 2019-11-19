@@ -2,7 +2,7 @@ const config = require('../../../config')
 
 describe('config.dbUrl', () => {
     it('should return prod url', () => {
-        expect(config.dbUrl('prod')).toContain('learningApp')
+        expect(config.dbUrl('prod')).toContain('mongodb.net')
     })
 
     it('should return dev url', () => {

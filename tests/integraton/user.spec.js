@@ -1,13 +1,15 @@
 const request = require("supertest");
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
+const app = require('../../services/express.service')()
 const config = require('../../config')
 const UserModel = require("../../models/user.model");
 let server;
 
 describe("/api/user", () => {
     beforeEach(async () => {
-        const app = require("../../app");
-        server = await app;
+        const main = require("../../main")
+        server = await main(app, mongoose)
     });
 
     afterEach(async () => {
@@ -84,6 +86,11 @@ describe("/api/user", () => {
     });
 
     describe("GET /me", () => {
+        afterEach(async () => {
+            await server.close()
+            await UserModel.remove({})
+        });
+
         it("status should be 200 for valid token", async () => {
             const user = {
                 name: 'Emmanuel Amodu',

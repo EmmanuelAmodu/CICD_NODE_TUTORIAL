@@ -1,5 +1,7 @@
 const request = require("supertest");
 const CourseModel = require("../../models/course.model");
+const mongoose = require('mongoose')
+const app = require('../../services/express.service')()
 
 const jwt = require('jsonwebtoken')
 const config = require('../../config')
@@ -7,9 +9,9 @@ let server, seed;
 
 describe("/api/courses", () => {
     beforeEach(async () => {
-        const app = require("../../app");
+        const main = require("../../main")
         seed = require('./seed')
-        server = await app;
+        server = await main(app, mongoose)
     });
 
     afterEach(async () => {

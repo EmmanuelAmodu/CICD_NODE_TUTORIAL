@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js --env prod",
     "dev": "nodemon app.js --env dev",
-    "test": "jest --watchAll --coverage"
+    "test": "jest --watchAll --coverage --forceExit --detectOpenHandles --maxWorkers=1"
   },
   "engines": {
     "node": "13.0.1"
