@@ -1,4 +1,3 @@
-require('express-async-errors')
 const express = require('express')
 const config = require('../config')
 const helmet = require('helmet')
@@ -6,7 +5,6 @@ const compression = require('compression')
 const morgan = require('morgan')
 const router = require('../routes')
 const app = express()
-const errorHandler = require('../middlewares/errorHandler')
 
 module.exports = function() {
     app.set('view engine', 'pug')
@@ -19,6 +17,5 @@ module.exports = function() {
     app.use(helmet())
     app.use(compression())
     app.use('/api', router)
-    app.use(errorHandler)
     return app
 }

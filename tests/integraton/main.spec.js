@@ -4,15 +4,10 @@ const mongoose = require('mongoose')
 const app = require('../../services/express.service')()
 
 describe("App", () => {
-    afterEach(async () => {
-        try {
-            await server.close();
-        } catch (err) {}
-    })
-
     it("should return an instance of http.Server", async () => {
         let server = await main(app, mongoose)
         expect(server).toBeInstanceOf(http.Server)
+        server.close()
     });
 
     it("should return an instance of http.Server", async () => {
