@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js --env prod",
     "dev": "nodemon index.js --env dev",
-    "test": "jest --watchAll --coverage --forceExit --detectOpenHandles --maxWorkers=1"
+    "dev-test": "jest --watchAll --coverage --forceExit --detectOpenHandles --maxWorkers=1",
+    "test": "jest --forceExit --detectOpenHandles --maxWorkers=1"
   },
   "engines": {
     "node": "13.0.1"
