@@ -1,5 +1,5 @@
 const request = require("supertest");
-const CourseModel = require("../../models/course.model");
+const EventModel = require("../../models/event.model");
 const mongoose = require('mongoose')
 const app = require('../../services/express.service')()
 
@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../../config')
 let server, seed;
 
-describe("/api/courses", () => {
+describe("/api/events", () => {
     beforeEach(async () => {
         const main = require("../../main")
         seed = require('./seed')
@@ -16,28 +16,28 @@ describe("/api/courses", () => {
 
     afterEach(async () => {
         await server.close()
-        await CourseModel.remove({})
+        await EventModel.remove({})
     });
 
     describe("GET /", () => {
-        it("should return courses", async () => {
-            await CourseModel.insertMany(seed.courses);
-            const res = await request(server).get("/api/courses");
+        it("should return events", async () => {
+            await EventModel.insertMany(seed.events);
+            const res = await request(server).get("/api/events");
             expect(res.status).toBe(200);
-            expect(res.body.courses.length).toBe(seed.courses.length);
+            expect(res.body.events.length).toBe(seed.events.length);
         });
     });
 
     describe("GET /:id", () => {
-        it("should return course if valid id is passed", async () => {
-            await CourseModel.create(seed.courses[0]);
-            const res = await request(server).get(`/api/courses/${seed.courses[0]._id}`);
+        it("should return event if valid id is passed", async () => {
+            await EventModel.create(seed.events[0]);
+            const res = await request(server).get(`/api/events/${seed.events[0]._id}`);
             expect(res.status).toBe(200);
-            expect(res.body).toMatchObject(seed.courses[0]);
+            expect(res.body).toMatchObject(seed.events[0]);
         });
 
         it("should return 404 if id is invalid", async () => {
-            const res = await request(server).get(`/api/courses/${seed.courses[0]._id}`);
+            const res = await request(server).get(`/api/events/${seed.events[0]._id}`);
             expect(res.status).toBe(404);
         });
     });
@@ -49,16 +49,16 @@ describe("/api/courses", () => {
         }, config.appKey)
     
         it("should return 400 for invalid input", async () => {
-            const newCourse = Object.assign({}, seed.courses[1].name);
-            delete newCourse.name
-            const res = await request(server).post("/api/courses").set('x-auth-token', token).send(newCourse);
+            const newEvent = Object.assign({}, seed.events[1].name);
+            delete newEvent.name
+            const res = await request(server).post("/api/events").set('x-auth-token', token).send(newEvent);
             expect(res.status).toBe(400);
         });
 
-        it("should create course", async () => {
-            const res = await request(server).post("/api/courses").set('x-auth-token', token).send(seed.courses[1]);
+        it("should create event", async () => {
+            const res = await request(server).post("/api/events").set('x-auth-token', token).send(seed.events[1]);
             expect(res.status).toBe(200);
-            expect(res.body).toMatchObject(seed.courses[1]);
+            expect(res.body).toMatchObject(seed.events[1]);
         });
     });
 
@@ -68,11 +68,11 @@ describe("/api/courses", () => {
             role: 'admin'
         }, config.appKey)
 
-        it("should return courses", async () => {
-            await CourseModel.create(seed.courses[1]);
-            const res = await request(server).delete(`/api/courses/${seed.courses[1]._id}`).set('x-auth-token', token)
+        it("should return events", async () => {
+            await EventModel.create(seed.events[1]);
+            const res = await request(server).delete(`/api/events/${seed.events[1]._id}`).set('x-auth-token', token)
             expect(res.status).toBe(200);
-            expect(res.body).toMatchObject(seed.courses[1]);
+            expect(res.body).toMatchObject(seed.events[1]);
         });
     });
 
@@ -82,11 +82,11 @@ describe("/api/courses", () => {
             role: 'admin'
         }, config.appKey)
 
-        it("should update courses", async () => {
-            await CourseModel.create(seed.courses[1]);
-            const res = await request(server).put(`/api/courses/${seed.courses[1]._id}`).set('x-auth-token', token).send(seed.courses[1])
+        it("should update events", async () => {
+            await EventModel.create(seed.events[1]);
+            const res = await request(server).put(`/api/events/${seed.events[1]._id}`).set('x-auth-token', token).send(seed.events[1])
             expect(res.status).toBe(200);
-            expect(res.body).toMatchObject(seed.courses[1]);
+            expect(res.body).toMatchObject(seed.events[1]);
         });
     });
 });

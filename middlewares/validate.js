@@ -3,7 +3,7 @@ Joi.objectId = require('joi-objectid')(Joi)
 
 // TODO improve implementations 
 module.exports = {
-    course(obj){
+    event(obj){
         return Joi.validate(obj, { 
             name: Joi.string().min(3).required(),
             isPublished: Joi.boolean().optional(),

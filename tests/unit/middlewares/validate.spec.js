@@ -1,21 +1,21 @@
 const validate = require('../../../middlewares/validate')
 const Joi = require('joi')
 
-describe('validate.course', () => {
+describe('validate.event', () => {
     it('should return error if name is not defined', () => {
-        const { error } = validate.course({  })
+        const { error } = validate.event({  })
         expect(error.name).toBe('ValidationError')
     })
 
     it('should return error if name has less than 3 character', () => {
-        const { error } = validate.course({ name: 'we' })
+        const { error } = validate.event({ name: 'we' })
         expect(error.name).toBe('ValidationError')
     })
 
     it('should return validate correct input', () => {
-        const { error } = validate.course({
+        const { error } = validate.event({
             tags: ["express", "backend"],
-            name: "Express.js Course",
+            name: "Express.js Event",
             category: 'web',
             isPublished: true,
             price: 10,

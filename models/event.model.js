@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const courseSchema = new Schema({
+const eventSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -25,7 +25,7 @@ const courseSchema = new Schema({
             validator: function (v) {
                 return v && v.length > 0
             },
-            message: 'A course should have at least one tag'
+            message: 'A event should have at least one tag'
         }
     },
     date: {
@@ -46,4 +46,4 @@ const courseSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Courses', courseSchema)
+module.exports = mongoose.model('Events', eventSchema)

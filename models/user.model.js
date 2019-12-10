@@ -41,6 +41,7 @@ const userSchema = new Schema({
 userSchema.methods = {
     generateAuthToken() {
         const user = _.pick(this, ['_id', 'name', 'email', 'isVerified', 'role'])
+        // TODO encrypt token before sending to client
         return jwt.sign(user, config.appKey, {
             expiresIn: '14d'
         })
